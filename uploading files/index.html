@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a id="download-href" download>Download</a>
+
+    <script>
+        fetch('/', {
+            method: 'POST',
+        }).then(response => {
+            // return response.json(); // (2)
+            // return response.blob(); // (1)
+        })
+
+        // (2) "Content-Type": "application/json; charset=UTF-8"
+        // .then(json => {
+        //     function download(textareaVal, filename) {
+        //         var element = document.createElement('a')
+        //         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textareaVal));
+        //         element.setAttribute('download', filename);
+        //         element.style.display = 'none';
+        //         document.body.appendChild(element)
+        //         element.click()
+        //         document.body.removeChild(element)
+        //     }
+        //     download(json['body'], json['title']);
+        // });
+
+        // (1) 'Content-Type': 'application/octet-stream'
+        // .then(blob => {
+        //     const reader = new FileReader();
+        //     function download(fileReaderResult) {
+        //         var element = document.createElement('a')
+        //         element.setAttribute('href', fileReaderResult);
+        //         element.setAttribute('download', 'defaultFilename.txt');
+        //         element.style.display = 'none';
+        //         document.body.appendChild(element)
+        //         element.click()
+        //         document.body.removeChild(element)
+        //     }
+        //     reader.onload = () => {
+        //         download(reader.result)
+        //     };
+        //     reader.readAsDataURL(blob); // или другой метод чтения файла
+        // });
+    </script>
+</body>
+
+</html>
