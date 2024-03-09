@@ -23,15 +23,15 @@ func generalHandle(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println(r.Method)
 	switch r.Method {
 	case "GET":
-		rootPathHandle(&w, r)
+		rootPathHandle(w, r)
 	case "POST":
-		rootPathHandlePost(&w, r)
+		rootPathHandlePost(w, r)
 	}
 }
 
-func rootPathHandle(w *http.ResponseWriter, r *http.Request) {
+func rootPathHandle(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println(r)
-	templates.Execute(*w, nil)
+	templates.Execute(w, nil)
 }
 
 type File struct {
@@ -39,25 +39,25 @@ type File struct {
 	Body  string `json:"body"`
 }
 
-func rootPathHandlePost(w *http.ResponseWriter, r *http.Request) {
+func rootPathHandlePost(w http.ResponseWriter, r *http.Request) {
 
 	fileName := "aboba.txt"
 	resultFile, err := os.Open(fileName)
 	if err != nil {
-		(*w).WriteHeader(http.StatusInternalServerError)
-		// json.NewEncoder(*w).Encode("Unable to open file ")
+		w.WriteHeader(http.StatusInternalServerError)
+		// json.NewEncoder(w).Encode("Unable to open file ")
 		return
 	}
 	defer resultFile.Close()
 
 	// //// (1)
 	// // force a download with the content- disposition field
-	// (*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
-	// (*w).Header().Set("Content-Disposition", "attachment; filename="+strconv.Quote(fileName))
-	// (*w).Header().Set("Content-Type", "application/octet-stream")
-	// (*w).WriteHeader(http.StatusOK)
+	// w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	// w.Header().Set("Content-Disposition", "attachment; filename="+strconv.Quote(fileName))
+	// w.Header().Set("Content-Type", "application/octet-stream")
+	// w.WriteHeader(http.StatusOK)
 	// // serve file out.
-	// http.ServeFile((*w), r, fileName)
+	// http.ServeFile(w, r, fileName)
 	// ////
 
 	// //// (2)
@@ -66,9 +66,9 @@ func rootPathHandlePost(w *http.ResponseWriter, r *http.Request) {
 	// 	Tilte: fileName,
 	// 	Body:  string(data),
 	// }
-	// (*w).Header().Set("Content-type", "application/json; charset=UTF-8")
-	// (*w).WriteHeader(http.StatusOK)
-	// json.NewEncoder(*w).Encode(jsonFile)
+	// w.Header().Set("Content-type", "application/json; charset=UTF-8")
+	// w.WriteHeader(http.StatusOK)
+	// json.NewEncoder(w).Encode(jsonFile)
 	// ////
 }
 
